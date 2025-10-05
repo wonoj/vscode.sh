@@ -6,9 +6,11 @@ set -e
 sudo apt update && sudo apt upgrade -y
 
 # 2. hangul install and settings
-sudo apt autoremove ibus ibus-hangul
-sudo apt install ibus ibus-hangul
+sudo apt autoremove -y ibus ibus-hangul
+sudo apt install -y ibus ibus-hangul 
+ibus-daemon -rd
 ibus restart
+
 
 # 3. install essential package
 sudo apt install -y software-properties-common apt-transport-https curl wget git build-essential python3-pip python3-venv unzip locales gnupg lsb-release
@@ -18,7 +20,7 @@ sudo locale-gen ko_KR.UTF-8
 sudo update-locale LANG=ko_KR.UTF-8
 
 # 5. Install VS Code
-wget -q0- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
 sudo apt update
